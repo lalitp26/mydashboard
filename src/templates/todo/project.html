@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+
+{% block title %}
+	<title>Project</title>
+{% endblock %}
+
+{% block content %}
+	<h1>Add Project</h1>
+	<hr>
+	<form method="POST">
+		{% csrf_token %}
+		{{ project_form }}
+
+		<button type="submit">Create</button>
+	</form>
+
+	<ul>{% if projects %}
+		{% for project in projects %}
+			<li>
+				<b>{{project.name}}</b>
+			</li>
+		{% endfor %}
+		{% else %}
+			<b>No project available</b>
+			
+		{% endif %}
+
+	</ul>
+
+	
+{% endblock %}

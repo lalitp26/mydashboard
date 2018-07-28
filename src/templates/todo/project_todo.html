@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+
+{% block title %}
+	<title>Project Todo's</title>
+{% endblock %}
+
+{% block content %}
+	<h1>{{ project.name}}</h1>
+	<a href="{% url 'update_project' project.id %}">Edit</a>
+	<hr>
+
+	<ul>
+		{% for todo in project.projecttodo_set.all %}
+		{% if todo.is_completed %}
+			<li> <del>{{todo.title}}</del> &nbsp;&nbsp;
+				<a href="{% url 'change_project_todo_status' project.id todo.id 'other' %}">Not complete</a>
+				<a href="{% url 'delete_project_todo' project.id todo.id 'other' %}">Delete</a>
+				
+			</li>
+		{% else %}
+			<li>{{todo.title}} &nbsp;&nbsp;
+				<a href="{% url 'change_project_todo_status' project.id todo.id 'other' %}">Complete</a>
+				<a href="{% url 'delete_project_todo' project.id todo.id 'other' %}">Delete</a>
+			</li>
+		{% endif %}
+		{% endfor %}
+	</ul>
+
+	<form method="POST">
+		{% csrf_token %}
+		{{ project_todo_form }}
+		<button type="submit">Add</button>
+	</form>
+{% endblock %}

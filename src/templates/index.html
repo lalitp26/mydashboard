@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% block title %}
+		<title>Todo Home</title>
+	{% endblock %}
+
+	<style type="text/css">
+		.completed {
+			color = red;
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+</head>
+<body>
+	  <nav>
+
+	    <div class="nav-wrapper container">
+	      	<a href="#" class="brand-logo">
+	      		<i class="large material-icons">laptop_windows</i>
+	      		My-Dash
+	  		</a>
+	      <ul id="nav-mobile" class="right hide-on-med-and-down">
+	        <li><a href="#">Project</a></li>
+	        <li><a href="#">Todo's</a></li>
+	        <li><a href="#">Youtub</a></li>
+	      </ul>
+	    </div>
+	  </nav>
+
+	<div class="container">
+		{% block content %}
+
+		{% endblock %}	
+
+
+		<div class="fixed-action-btn">
+			<a class="btn-floating btn-large red">
+				<i class="large material-icons">add</i>
+			</a>
+			<ul>
+				<li><a class="btn-floating red" title="Add Todo"><i class="material-icons">assignment</i></a></li>
+				<li><a class="btn-floating green" title="Add Project"><i class="material-icons">star</i></a></li>
+			</ul>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.fixed-action-btn').floatingActionButton();
+		});
+	</script>
+</body>
+</html>

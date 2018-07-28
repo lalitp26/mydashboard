@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+
+{% block title %}
+	<title>Common Todo's</title>
+{% endblock %}
+
+
+{% block content %}
+	<h1>Common Todos</h1>
+	<br>
+	<form method="POST">
+		{% csrf_token  %}
+		{{ common_todo_form }}
+		<button  class="btn waves-effect" type="submit">Add</button>
+	</form>
+	<ul>
+		{% for todo in common_todo_list %}
+			{% if todo.is_completed %}
+				<li style="color: red"> <del>{{todo.title}}</del> &nbsp;&nbsp;
+					<a href="{% url 'change_common_todo_status' todo.id  'other'%}">Not complete</a>
+					<a href="{% url 'delete_todo' todo.id  'other' %}">Delete</a>
+				</li>
+			{% else %}
+				<li>{{todo.title}} &nbsp;&nbsp;
+					<a href="{% url 'change_common_todo_status' todo.id  'other'%}">Complete</a>
+					<a href="{% url 'delete_todo' todo.id  'other' %}">Delete</a>
+				</li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+{% endblock %}

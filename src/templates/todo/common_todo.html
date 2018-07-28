@@ -6,26 +6,52 @@
 
 
 {% block content %}
-	<h1>Common Todos</h1>
-	<br>
-	<form method="POST">
-		{% csrf_token  %}
-		{{ common_todo_form }}
-		<button  class="btn waves-effect" type="submit">Add</button>
-	</form>
-	<ul>
+<div class="row">
+	
+	<blockquote>
+		<h5>Todo's</h5>	
+	</blockquote>
+	<div class="col s3 m3 l3 xl3"></div>
+		<div class="col s6 m6 l6 xl6">
+			<div class="card">
+		        <div class="card-content">
+		          	<form method="POST">
+						{% csrf_token  %}
+						{{ common_todo_form }}
+						<button  class="btn waves-effect" type="submit">Add</button>
+					</form>
+		        </div>
+		    </div>
+			
+		</div>
+		<div class="col s3 m3 l3 xl3"></div>
+</div>
+	
+	<div class="row">
+		<div class="col l12">
+			<ul class="collection">
 		{% for todo in common_todo_list %}
 			{% if todo.is_completed %}
-				<li style="color: red"> <del>{{todo.title}}</del> &nbsp;&nbsp;
-					<a href="{% url 'change_common_todo_status' todo.id  'other'%}">Not complete</a>
-					<a href="{% url 'delete_todo' todo.id  'other' %}">Delete</a>
+				<li class="collection-item">
+				<div>
+						<del>{{todo.title}}</del>
+						<a class="secondary-content" href="{% url 'delete_todo' todo.id  'other' %}"><i class="material-icons red-text text-darken-2">delete</i></a>
+						<a class="secondary-content" href="{% url 'change_common_todo_status' todo.id  'other'%}"><i class="material-icons red-text text-darken-2">close</i></a>
+						
+					</div>
 				</li>
 			{% else %}
-				<li>{{todo.title}} &nbsp;&nbsp;
-					<a href="{% url 'change_common_todo_status' todo.id  'other'%}">Complete</a>
-					<a href="{% url 'delete_todo' todo.id  'other' %}">Delete</a>
+				<li class="collection-item">
+					<div>
+						{{todo.title}}
+						<a class="secondary-content" href="{% url 'delete_todo' todo.id  'other' %}"><i class="material-icons red-text text-darken-2">delete</i></a>
+						<a class="secondary-content" href="{% url 'change_common_todo_status' todo.id  'other'%}"><i class="material-icons teal-text text-darken-2">check_circle</i></a>
+					</div>
 				</li>
 			{% endif %}
 		{% endfor %}
 	</ul>
+		</div>
+	</div>
+	
 {% endblock %}

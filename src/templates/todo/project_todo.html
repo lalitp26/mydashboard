@@ -5,30 +5,51 @@
 {% endblock %}
 
 {% block content %}
-	<h1>{{ project.name}}</h1>
-	<a href="{% url 'update_project' project.id %}">Edit</a>
-	<hr>
+<div class="row">
+	<blockquote>
+		<h4>Add Todos</h4>
+		{{ project.name}} | <a href="{% url 'update_project' project.id %}">Edit</a>
+	</blockquote>
+	<div class="col s3 m3 l3 xl3"></div>
+		<div class="col s6 m6 l6 xl6">
+			<div class="card">
+		        <div class="card-content">
+		          	<form method="POST">
+						{% csrf_token %}
+						{{ project_todo_form }}
+						<button class="btn" type="submit">Add</button>
+					</form>
+		        </div>
+		    </div>
+		
+	</div>
+	<div class="col s3 m3 l3 xl3"></div>
 
-	<ul>
+</div>
+	
+	<ul class="collection">
 		{% for todo in project.projecttodo_set.all %}
 		{% if todo.is_completed %}
-			<li> <del>{{todo.title}}</del> &nbsp;&nbsp;
-				<a href="{% url 'change_project_todo_status' project.id todo.id 'other' %}">Not complete</a>
-				<a href="{% url 'delete_project_todo' project.id todo.id 'other' %}">Delete</a>
-				
+			
+			<li class="collection-item">
+			 	<div>
+			 		<del>{{todo.title}}</del>
+					<a class="secondary-content" href="{% url 'delete_project_todo' project.id todo.id 'other' %}"><i class="material-icons red-text text-darken-2">delete</i></a>
+					<a class="secondary-content" href="{% url 'change_project_todo_status' project.id todo.id 'other' %}"><i class="material-icons red-text text-darken-2">close</i></a>
+				</div>
 			</li>
 		{% else %}
-			<li>{{todo.title}} &nbsp;&nbsp;
-				<a href="{% url 'change_project_todo_status' project.id todo.id 'other' %}">Complete</a>
-				<a href="{% url 'delete_project_todo' project.id todo.id 'other' %}">Delete</a>
+			
+			<li class="collection-item">
+				<div>
+					{{todo.title}}
+					<a class="secondary-content" href="{% url 'delete_project_todo' project.id todo.id 'other' %}"><i class="material-icons red-text text-darken-2">delete</i></a>
+					<a class="secondary-content" href="{% url 'change_project_todo_status' project.id todo.id 'other' %}"><i class="material-icons teal-text text-darken-2">check_circle</i></a>
+				</div>
 			</li>
 		{% endif %}
 		{% endfor %}
 	</ul>
 
-	<form method="POST">
-		{% csrf_token %}
-		{{ project_todo_form }}
-		<button type="submit">Add</button>
-	</form>
+	
 {% endblock %}

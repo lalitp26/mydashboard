@@ -11,21 +11,29 @@
 		{% csrf_token %}
 		{{ project_form }}
 
-		<button type="submit">Create</button>
+		<button class="btn" type="submit">Create</button>
 	</form>
+<div class="row">
+	<div class="col l12">
+		{% if projects %}
+			<ul class="collection">
+				{% for project in projects %}
+	    		
+					<li class="collection-item">
+						<div>
+							{{ project.name }}
+							<a href="{% url 'project_todo' project.id %}" class="secondary-content" title="Add Todo's">
+								<i class="material-icons">send</i>
+							</a>
+						</div>
+					</li>
+	    	
+	    		{% endfor %}
+	    	</ul>
+		{% endif %}		
+	</div>
+</div>
 
-	<ul>{% if projects %}
-		{% for project in projects %}
-			<li>
-				<b>{{project.name}}</b>
-			</li>
-		{% endfor %}
-		{% else %}
-			<b>No project available</b>
-			
-		{% endif %}
-
-	</ul>
 
 	
 {% endblock %}

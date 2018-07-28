@@ -6,34 +6,38 @@
 
 
 {% block content %}
-	<blockquote>
-		<h5>Projects Todo's</h5>	
-	</blockquote>
-	<a class="btn" href="{% url 'project' %}">Add Project</a>
-
+	
 	<div class="row">
-	    <div class="col s12 m4 l4 xl4">
-	      <div class="card">
-	        <div class="card-content">
-        		<span class="card-title">Project</span>
-	        </div>
-	        <div class="card-action">
-	          <a class="btn" href="#">
-	          	<b><i class="material-icons" title="Add todo">add</i></b>
-	          </a>
-	        </div>
-	      </div>
-	    </div>
+		<div class="col s12 m6 l6 xl6">
+			<blockquote>
+				<h5>Projects Todo's</h5>	
+			</blockquote>
+			<a class="btn" href="{% url 'project' %}">Project</a>
+		{% if projects %}
+			<ul class="collection">
+				{% for project in projects %}
+	    		
+					<li class="collection-item">
+						<div>
+							{{ project.name }}
+							<a href="{% url 'project_todo' project.id %}" class="secondary-content" title="Add Todo's">
+								<i class="material-icons">send</i>
+							</a>
+						</div>
+					</li>
+	    	
+	    		{% endfor %}
+	    	</ul>
+		{% endif %}
+		</div>
+	
 
-	    <hr>
-	<a class="btn" href="{% url 'todo' %}">Add Todo</a>
-	<div class="col s12 m4 l4">
-		<ul class="collection with-header">
-		<li class="collection-header">
-			<div>
-				<h4>Todo's</h4>
-			</div>
-		</li>
+	<div class="col s12 m6 l6 xl6">
+		<blockquote>
+			<h5>Common Todo's</h5>	
+		</blockquote>
+		<a class="btn" href="{% url 'todo' %}">Add Todo</a>
+		<ul class="collection">
 		{% for todo in common_todo_list %}
 			{% if todo.is_completed %}
 				<li class="collection-item" style="color: red"> 
@@ -57,37 +61,5 @@
 	</ul>
 	</div>
   	</div>
-
-	<ul>{% if projects %}
-			{% for project in projects %}
-				<li>
-					<b>{{project.name}}</b>
-					<a href="{% url 'project_todo' project.id %}">Add todos</a>
-					{% if project.projecttodo_set.all %}
-					<ul>
-						{% for todo in project.projecttodo_set.all %}
-							{% if todo.is_completed %}
-								<li> <del>{{todo.title}}</del> &nbsp;&nbsp;
-									<a href="{% url 'change_project_todo_status' project.id todo.id 'dash'%}">Not complete</a>
-									<a href="{% url 'delete_project_todo' project.id todo.id 'dash' %}">Delete</a>
-								</li>
-							{% else %}
-								<li>{{todo.title}} &nbsp;&nbsp;
-									<a href="{% url 'change_project_todo_status' project.id todo.id 'dash' %}">Complete</a>
-									<a href="{% url 'delete_project_todo' project.id todo.id 'dash' %}">Delete</a>
-								</li>
-							{% endif %}
-						{% endfor %}			
-					</ul>
-					{% endif %}
-				</li>
-			{% endfor %}
-		{% else %}
-			<b>No project available</b>
-			
-		{% endif %}
-
-	</ul>
-
 	
 {% endblock %}

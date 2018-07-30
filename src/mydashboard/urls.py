@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^commontodos/', include('todo.urls')),
     url(r'^youtube/', include('youtube.urls')),
+    url(r'^passwordmanager/', include('passwordmanager.urls')),
 ]

@@ -21,7 +21,7 @@
 						<div>
 							{{ project.name }}
 							<a href="{% url 'project_todo' project.id %}" class="secondary-content" title="Add Todo's">
-								<span data-badge-caption="todo's" class="new badge">
+								<span data-badge-caption="todo's" class="new badge pink darken-4">
 									{{ project.projecttodo_set.count }}
 								</span>
 								<!-- <i class="material-icons">send</i> -->
@@ -43,11 +43,11 @@
 		<ul class="collection">
 		{% for todo in common_todo_list %}
 			{% if todo.is_completed %}
-				<li class="collection-item" style="color: red"> 
+				<li class="collection-item" style="color: #880e4f"> 
 					<div>
 						<del>{{todo.title}}</del>
 						<a class="secondary-content" href="{% url 'delete_todo' todo.id  'dash' %}"><i class="material-icons red-text text-darken-2">delete</i></a>
-						<a class="secondary-content" href="{% url 'change_common_todo_status' todo.id 'dash' %}"><i class="material-icons red-text text-darken-2">close</i></a>
+						<a class="secondary-content" href="{% url 'change_common_todo_status' todo.id 'dash' %}"><i class="material-icons pink-text text-darken-4">close</i></a>
 						
 					</div>
 				</li>
@@ -56,7 +56,7 @@
 					<div>
 						{{todo.title}}
 						<a class="secondary-content" href="{% url 'delete_todo' todo.id  'dash' %}"><i class="material-icons red-text text-darken-2">delete</i></a>
-						<a class="secondary-content" href="{% url 'change_common_todo_status' todo.id 'dash' %}"><i class="material-icons teal-text text-darken-2">check_circle</i></a>
+						<a class="secondary-content" href="{% url 'change_common_todo_status' todo.id 'dash' %}"><i class="material-icons pink-text text-darken-4">check_circle</i></a>
 					</div>
 				</li>
 			{% endif %}

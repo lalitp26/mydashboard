@@ -9,24 +9,50 @@
 		<blockquote>
 				<h4>Add Project</h4>	
 		</blockquote>
-		<div class="col s3 m3 l3 xl3"></div>
 		<div class="col s6 m6 l6 xl6">
 			<div class="card">
 		        <div class="card-content">
 		          	<form method="POST">
 						{% csrf_token %}
-						{{ project_form }}
+						
+					{{project_form.non_field_errors }}	
 
-						<button class="btn waves-effect pink darken-4" type="submit">Create</button>
+					{% for hidden_field in project_form.hidden_fields %}
+						{{ hidden_field.errors }}
+						{{ hidden_field }}
+					{% endfor %}
+
+					{% for field in project_form.visible_fields %}
+						{% if field.html_name != 'is_active' %}
+							<div class="input-field">
+								
+								{{ field.errors }}
+								{{ field }}
+								{{ field.help_text }}
+								<label>{{ field.label_tag }}</label>
+							</div>
+						{% else %}
+						<div class="input-field">
+							<label>
+								{{ field.errors }}
+								{{ field }}
+							    <span>{{ field.label_tag }}</span>
+							    {{ field.help_text }}
+							  </label>
+						</div>
+						{% endif %}
+					{% endfor %}
+					<br>
+					<br>
+					<button type="submit" class="btn waves-effect pink darken-4">Add</button>
 					</form>
 		        </div>
 		    </div>
 			
 		</div>
-		<div class="col s3 m3 l3 xl3"></div>
-	</div>
-<div class="row">
-	<div class="col l12">
+
+
+	<div class="col l6">
 		{% if projects %}
 			<ul class="collection">
 				{% for project in projects %}

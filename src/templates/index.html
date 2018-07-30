@@ -33,23 +33,44 @@
 	      		My-Dash
 	  		</a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
+	        {% if request.user %}
 	        <li>
-	        	<a href="{% url 'project' %}">
+	        	<a href="{% url 'project' %}" title="Project Todo Manager">
 					<i class="material-icons left">star</i>
 					Project
 	        	</a>
 	        </li>
 	        <li>
-	        	<a href="{% url 'todo' %}">
+	        	<a href="{% url 'todo' %}" title="Todo Manager">
 	        		<i class="material-icons left">gps_fixed</i>
 	        		Todo's
 	        	</a>
 	        </li>
 	        <li>
-	        	<a href="{% url 'youtube:dashboard' %}">
+	        	<a href="{% url 'youtube:dashboard' %}" title="Youtube Manager">
 	        		<i class="material-icons left">ondemand_video</i>
 	        		Youtube
 	    		</a>
+	    	</li>
+	    	<li>
+	        	<a href="{% url 'passmanager:dashboard' %}" title="Account Manager">
+	        		<i class="material-icons left">account_box</i>
+	        		Web Account
+	    		</a>
+	    	</li>
+	    	{% endif %}
+	    	<li>
+	    		{% if request.user %}
+	    		<a href="{% url 'passmanager:dashboard' %}" title="Account Manager">
+	        		<i class="material-icons left">lock</i>
+	        		Logout
+	    		</a>
+	    		{% else %}
+	        	<a href="{% url 'passmanager:dashboard' %}" title="Account Manager">
+	        		<i class="material-icons left">lock_open</i>
+	        		Login
+	    		</a>
+	    		{% endif %}
 	    	</li>
 	      </ul>
 	    </div>

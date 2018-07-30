@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'todo.apps.TodoConfig',
     'youtube.apps.YoutubeConfig',
+    'passwordmanager.apps.PasswordmanagerConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -11,24 +11,48 @@
 	<blockquote>
 		<h5>Todo's</h5>	
 	</blockquote>
-	<div class="col s3 m3 l3 xl3"></div>
 		<div class="col s6 m6 l6 xl6">
 			<div class="card">
 		        <div class="card-content">
 		          	<form method="POST">
-						{% csrf_token  %}
-						{{ common_todo_form }}
-						<button  class="btn waves-effect pink darken-4" type="submit">Add</button>
+						
+					{% csrf_token %}
+	    			{{common_todo_form.non_field_errors }}	
+
+					{% for hidden_field in common_todo_form.hidden_fields %}
+						{{ hidden_field.errors }}
+						{{ hidden_field }}
+					{% endfor %}
+
+					{% for field in common_todo_form.visible_fields %}
+						{% if field.html_name != 'is_completed' %}
+							<div class="input-field">
+								
+								{{ field.errors }}
+								{{ field }}
+								{{ field.help_text }}
+								<label>{{ field.label_tag }}</label>
+							</div>
+						{% else %}
+						<div class="input-field">
+							<label>
+								{{ field.errors }}
+								{{ field }}
+							    <span>{{ field.label_tag }}</span>
+							    {{ field.help_text }}
+							  </label>
+						</div>
+						{% endif %}
+					{% endfor %}
+					<br>
+					<br>
+					<button type="submit" class="btn waves-effect pink darken-4">Add</button>
 					</form>
 		        </div>
 		    </div>
 			
 		</div>
-		<div class="col s3 m3 l3 xl3"></div>
-</div>
-	
-	<div class="row">
-		<div class="col l12">
+		<div class="col l6">
 			<ul class="collection">
 		{% for todo in common_todo_list %}
 			{% if todo.is_completed %}
@@ -36,7 +60,7 @@
 				<div>
 						<del>{{todo.title}}</del>
 						<a class="secondary-content" href="{% url 'delete_todo' todo.id  'other' %}"><i class="material-icons red-text text-darken-2">delete</i></a>
-						<a class="secondary-content" href="{% url 'change_common_todo_status' todo.id  'other'%}"><i class="material-icons red-text text-darken-2">close</i></a>
+						<a class="secondary-content" href="{% url 'change_common_todo_status' todo.id  'other'%}"><i class="material-icons pink-text text-darken-4">close</i></a>
 						
 					</div>
 				</li>
@@ -45,7 +69,7 @@
 					<div>
 						{{todo.title}}
 						<a class="secondary-content" href="{% url 'delete_todo' todo.id  'other' %}"><i class="material-icons red-text text-darken-2">delete</i></a>
-						<a class="secondary-content" href="{% url 'change_common_todo_status' todo.id  'other'%}"><i class="material-icons teal-text text-darken-2">check_circle</i></a>
+						<a class="secondary-content" href="{% url 'change_common_todo_status' todo.id  'other'%}"><i class="material-icons pink-text text-darken-4">check_circle</i></a>
 					</div>
 				</li>
 			{% endif %}

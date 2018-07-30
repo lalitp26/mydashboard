@@ -23,3 +23,7 @@ class CommonTodoForm(forms.ModelForm):
 	class Meta:
 		model = CommonToDo
 		exclude = ["author"]
+
+		widgets = {
+			'description': forms.Textarea(attrs={'class':'materialize-textarea'}),
+		}

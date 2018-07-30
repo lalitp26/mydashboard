@@ -7,13 +7,16 @@ class ProjectForm(forms.ModelForm):
 		exclude = ["owner"]
 		widgets = {
 			'name' : forms.TextInput(attrs={'class':'form-control col-lg-6'}),
-			'description': forms.Textarea(attrs={'class':'form-control col-lg-6'}),
+			'description': forms.Textarea(attrs={'class':'materialize-textarea'}),
 		}
 
 class ProjectTodoForm(forms.ModelForm):
 	class Meta:
 		model = ProjectToDo
 		exclude = ["project", 'author']
+		widgets = {
+			'description': forms.Textarea(attrs={'class':'materialize-textarea'}),
+		}
 
 
 class CommonTodoForm(forms.ModelForm):

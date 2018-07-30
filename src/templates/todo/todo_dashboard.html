@@ -21,7 +21,10 @@
 						<div>
 							{{ project.name }}
 							<a href="{% url 'project_todo' project.id %}" class="secondary-content" title="Add Todo's">
-								<i class="material-icons">send</i>
+								<span data-badge-caption="todo's" class="new badge">
+									{{ project.projecttodo_set.count }}
+								</span>
+								<!-- <i class="material-icons">send</i> -->
 							</a>
 						</div>
 					</li>

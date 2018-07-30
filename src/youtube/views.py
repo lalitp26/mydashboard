@@ -6,7 +6,6 @@ from .models import Youtube
 def dashboard(request):
 	youtube_form = YoutubeForm(request.POST or None)
 	youtube_list = Youtube.objects.filter(owner = request.user)
-
 	if request.method == "POST":
 		if youtube_form.is_valid():
 			instance = youtube_form.save(commit = False)
@@ -20,7 +19,7 @@ def dashboard(request):
 
 	return render(request, "youtube/index.html", context)
 
-def edit_youtube(request, youtube_id):
+def update_youtube(request, youtube_id):
 
 	youtube_list = Youtube.objects.filter(owner = request.user)
 

@@ -12,7 +12,7 @@
 			<blockquote>
 				<h5>Projects Todo's</h5>	
 			</blockquote>
-			<a class="btn" href="{% url 'project' %}">Project</a>
+			<a class="btn waves-effect pink darken-4" href="{% url 'project' %}">Project</a>
 		{% if projects %}
 			<ul class="collection">
 				{% for project in projects %}
@@ -39,7 +39,7 @@
 		<blockquote>
 			<h5>Common Todo's</h5>	
 		</blockquote>
-		<a class="btn" href="{% url 'todo' %}">Add Todo</a>
+		<a class="btn waves-effect pink darken-4" href="{% url 'todo' %}">Add Todo</a>
 		<ul class="collection">
 		{% for todo in common_todo_list %}
 			{% if todo.is_completed %}

@@ -10,3 +10,4 @@ class YoutubeForm(forms.ModelForm):
 		widgets = {
 			'description': forms.Textarea(attrs={'class':'materialize-textarea'})
 		}
+

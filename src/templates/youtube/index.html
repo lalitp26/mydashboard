@@ -10,57 +10,93 @@
 	<blockquote>
 		<h4>Add Youtube Urls</h4>	
 	</blockquote>
-	<div class="offset-l3 col l6">
+	<div class="col s12 m12 l6 xl6">
 		<div class="card">
-	    <div class="card-content">
-	
-	    	<form method="POST">
-	    		{% csrf_token %}
-	    			{{youtube_form.non_field_errors }}	
+		    <div class="card-content">
+		
+		    	<form method="POST">
+		    		{% csrf_token %}
+		    			{{youtube_form.non_field_errors }}	
 
-				{% for hidden_field in youtube_form.hidden_fields %}
-					{{ hidden_field.errors }}
-					{{ hidden_field }}
-				{% endfor %}
+					{% for hidden_field in youtube_form.hidden_fields %}
+						{{ hidden_field.errors }}
+						{{ hidden_field }}
+					{% endfor %}
 
-				{% for field in youtube_form.visible_fields %}
-					{% if field.html_name != 'is_downloaded' %}
+					{% for field in youtube_form.visible_fields %}
+						{% if field.html_name != 'is_downloaded' %}
+							<div class="input-field">
+								
+								{{ field.errors }}
+								{{ field }}
+								{{ field.help_text }}
+								<label>{{ field.label_tag }}</label>
+							</div>
+						{% else %}
 						<div class="input-field">
-							<label>{{ field.label_tag }}</label>
-							{{ field.errors }}
-							{{ field }}
-							{{ field.help_text }}
-							
+							<label>
+								{{ field.errors }}
+								{{ field }}
+							    <span>{{ field.label_tag }}</span>
+							    {{ field.help_text }}
+							  </label>
 						</div>
-					{% else %}
-					<div class="input-field">
-						<label>
-							{{ field.errors }}
-							{{ field }}
-						    <span>{{ field.label_tag }}</span>
-						    {{ field.help_text }}
-						  </label>
-					</div>
-					{% endif %}
-				{% endfor %}
-				<br>
-				<br>
-				<button type="submit" class="btn">Add</button>
-</form>	
-</div>
-    </div>
+						{% endif %}
+					{% endfor %}
+					<br>
+					<br>
+					<button type="submit" class="btn waves-effect pink darken-4">Add</button>
+				</form>	
+			</div>
+   		</div>
 	</div>
-	
-</div>
-	<div class="row">
-		<div class="col l12">
-			<ul class="collection">
-				{% if youtube_list %}
-					{% for youtube in youtube_list %}
-						{% if youtube.is_downloaded %}
+<!-- </div>
+<div class="row"> -->
+	<div class="col s12 m12 l6 xl6">
+		<ul class="collection">
+			{% if youtube_list %}
+				{% for youtube in youtube_list %}
+					{% if youtube.is_downloaded %}
+					<li class="collection-item">
+						<div class="teal-text">
+							{{ youtube.name }}	
+							<a href="{% url 'youtube:delete' youtube.id %}" class="secondary-content "><i class="material-icons red-text text-darken-2">delete</i></a> 
+							<span class="secondary-content">
+								&nbsp;&nbsp;
+							</span>
+							<a href="{% url 'youtube:edit' youtube.id %}" class="secondary-content "><i class="material-icons orange-text text-darken-2">edit</i></a> 
+							<span class="secondary-content">
+								&nbsp;&nbsp;
+							</span>
+							<a href="{{youtube.url}}" target="_blank" class="secondary-content"><i class="material-icons">play_circle_filled</i></a>
+							{% if youtube.priority == 'H' %}
+								<span class="secondary-content">
+									&nbsp;&nbsp;
+								</span>
+								<span class="secondary-content new badge red darken-4" data-badge-caption="High">
+								</span>
+							{% elif youtube.priority == 'M' %}
+								<span class="secondary-content">
+									&nbsp;&nbsp;
+								</span>
+								<span class="secondary-content new badge orange darken-4" data-badge-caption="Medium">
+								</span>
+							{% else %}
+								<span class="secondary-content">
+									&nbsp;&nbsp;
+								</span>
+								<span class="secondary-content new badge blue darken-4" data-badge-caption="Low">
+								</span>
+
+							{% endif %}
+
+						</div>
+						
+					</li>
+					{% else %}
 						<li class="collection-item">
-							<div class="teal-text">
-								{{ youtube.name }}	
+							<div>
+								{{ youtube.name }}
 								<a href="{% url 'youtube:delete' youtube.id %}" class="secondary-content "><i class="material-icons red-text text-darken-2">delete</i></a> 
 								<span class="secondary-content">
 									&nbsp;&nbsp;
@@ -69,41 +105,45 @@
 								<span class="secondary-content">
 									&nbsp;&nbsp;
 								</span>
-								<a href="#!" class="secondary-content"><i class="material-icons">play_circle_filled</i></a>
+								<a href="#!" class="secondary-content"><i class="material-icons">cloud_download</i></a> 
+								<span class="secondary-content">
+									&nbsp;&nbsp;
+								</span>
+								<a href="{{youtube.url}}" target="_blank" class="secondary-content"><i class="material-icons">play_circle_filled</i></a>
+									{% if youtube.priority == 'H' %}
+									<span class="secondary-content">
+										&nbsp;&nbsp;
+									</span>
+									<span class="secondary-content new badge red darken-4" data-badge-caption="High">
+									</span>
+								{% elif youtube.priority == 'M' %}
+									<span class="secondary-content">
+										&nbsp;&nbsp;
+									</span>
+									<span class="secondary-content new badge orange darken-4" data-badge-caption="Medium">
+									</span>
+								{% else %}
+									<span class="secondary-content">
+										&nbsp;&nbsp;
+									</span>
+									<span class="secondary-content new badge blue darken-4" data-badge-caption="Low">
+									</span>
+
+								{% endif %}
 							</div>
-							
 						</li>
-						{% else %}
-							<li class="collection-item">
-								<div>
-									{{ youtube.name }}
-									<a href="{% url 'youtube:delete' youtube.id %}" class="secondary-content "><i class="material-icons red-text text-darken-2">delete</i></a> 
-									<span class="secondary-content">
-										&nbsp;&nbsp;
-									</span>
-									<a href="{% url 'youtube:edit' youtube.id %}" class="secondary-content "><i class="material-icons orange-text text-darken-2">edit</i></a> 
-									<span class="secondary-content">
-										&nbsp;&nbsp;
-									</span>
-									<a href="#!" class="secondary-content"><i class="material-icons">cloud_download</i></a> 
-									<span class="secondary-content">
-										&nbsp;&nbsp;
-									</span>
-									<a href="#!" class="secondary-content"><i class="material-icons">play_circle_filled</i></a>
-								</div>
-							</li>
-						{% endif %}
-					{% endfor %}
-				{% else %}
-					<li class="collection-item">
-						No Urls found
-					</li>
+					{% endif %}
+				{% endfor %}
+			{% else %}
+				<li class="collection-item">
+					No Urls found
+				</li>
 
-				{% endif %}
+			{% endif %}
 
-			</ul>
+		</ul>
 
-		</div>
 	</div>
+</div>
 
 {% endblock %}

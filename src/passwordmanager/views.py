@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from .models import PasswordManager
 from .forms import PasswordManagerForm
+from django.contrib.auth import authenticate
+from util.text_local import sendSMS
+from django.contrib import messages
 # Create your views here.
 
 
@@ -63,4 +66,24 @@ def update_account(request, account_id):
 		}			
 	return render(request, "passwordmanager/password_dashboard.html", context)
 
-			
+
+def send_password(request):
+	user = request.user
+	password = request.POST["password"]
+	user = authenticate(request, username=user.username, password=password)
+	mobile = '9970109863'
+
+	if user is not None:
+		account_id = request.POST["account_id"] or 0
+
+		if account_id:
+			password_obj = PasswordManager.objects.get(id = account_id)
+
+			if password_obj:
+				resp =  sendSMS(mobile,'', 'Your account password '+password_obj.password)
+				print(resp)
+				messages.error(request, 'Your account password sent on '+mobile)
+				return redirect("passmanager:dashboard")
+	else:
+		messages.info(request, 'Enter correct credentilas.')
+		return redirect("passmanager:dashboard")

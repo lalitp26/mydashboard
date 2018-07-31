@@ -2,7 +2,6 @@ from django import forms
 
 from .models import PasswordManager
 
-
 class PasswordManagerForm(forms.ModelForm):
 	class Meta:
 		model = PasswordManager
@@ -11,3 +10,5 @@ class PasswordManagerForm(forms.ModelForm):
 		widgets = {
 			"password" : forms.PasswordInput()
 		}
+
+

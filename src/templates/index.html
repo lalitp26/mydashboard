@@ -97,6 +97,13 @@
 		$(document).ready(function(){
 			$('.fixed-action-btn').floatingActionButton();
 			$('select').formSelect();
+			$('.modal').modal();
+
+			$("body").on("click", ".modal-trigger", function(){
+				var acount_id = $(this).attr("data")
+				$("#account_id").val(acount_id)
+
+			})
 		});
 	</script>
 </body>

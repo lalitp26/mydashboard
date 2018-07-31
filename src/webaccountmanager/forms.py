@@ -1,10 +1,10 @@
 from django import forms
 
-from .models import PasswordManager
+from .models import WebAccountManager
 
-class PasswordManagerForm(forms.ModelForm):
+class WebAccountManagerForm(forms.ModelForm):
 	class Meta:
-		model = PasswordManager
+		model = WebAccountManager
 		exclude = ["owner"]
 
 		widgets = {

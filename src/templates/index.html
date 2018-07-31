@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,6 +7,7 @@
 	{% endblock %}
 
 	<style type="text/css">
+
 		.completed {
 			color = red;
 		}
@@ -13,6 +15,24 @@
 		blockquote{
 			border-left: 5px solid #880e4f !important;
 		}
+
+		.sidenav li>a{
+			color: white !important;
+		}
+
+		.sidenav li>a>i{
+			color: white !important;	
+		}
+
+	body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
 	</style>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 	<!--Import Google Icon Font-->
@@ -25,13 +45,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
 </head>
 <body>
-	  <nav class="pink darken-4">
+	  <nav class="pink darken-4 nav-extended">
 
 	    <div class="nav-wrapper container">
 	      	<a href="/" class="brand-logo">
 	      		<i class="large material-icons">laptop_windows</i>
 	      		My-Dash
 	  		</a>
+  		 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
 	        {% if request.user %}
 	        <li>
@@ -53,7 +74,7 @@
 	    		</a>
 	    	</li>
 	    	<li>
-	        	<a href="{% url 'passmanager:dashboard' %}" title="Account Manager">
+	        	<a href="{% url 'webaccountmanager:dashboard' %}" title="Account Manager">
 	        		<i class="material-icons left">account_box</i>
 	        		Web Account
 	    		</a>
@@ -61,12 +82,12 @@
 	    	{% endif %}
 	    	<li>
 	    		{% if request.user %}
-	    		<a href="{% url 'passmanager:dashboard' %}" title="Account Manager">
+	    		<a href="{% url 'webaccountmanager:dashboard' %}" title="Account Manager">
 	        		<i class="material-icons left">lock</i>
 	        		Logout
 	    		</a>
 	    		{% else %}
-	        	<a href="{% url 'passmanager:dashboard' %}" title="Account Manager">
+	        	<a href="{% url 'webaccountmanager:dashboard' %}" title="Account Manager">
 	        		<i class="material-icons left">lock_open</i>
 	        		Login
 	    		</a>
@@ -75,6 +96,60 @@
 	      </ul>
 	    </div>
 	  </nav>
+
+<!-- Side nav Bar -->
+
+	  <ul class="sidenav pink darken-4" id="mobile-demo">
+	    {% if request.user %}
+	    <li>
+			<div class="user-view">
+				<div class="background">
+				    <img src="{% static 'profile.png' %}" >
+				</div>
+				<a href="#user"><img class="circle" src="{% static 'user.png' %}"></a>
+				<a href="#name"><span class="white-text name">{{ request.user }}</span></a>
+				<!-- <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a> -->
+			</div>
+		</li>
+	        <li>
+	        	<a href="{% url 'project' %}" title="Project Todo Manager">
+					<i class="material-icons left">star</i>
+					Project
+	        	</a>
+	        </li>
+	        <li>
+	        	<a href="{% url 'todo' %}" title="Todo Manager">
+	        		<i class="material-icons left">gps_fixed</i>
+	        		Todo's
+	        	</a>
+	        </li>
+	        <li>
+	        	<a href="{% url 'youtube:dashboard' %}" title="Youtube Manager">
+	        		<i class="material-icons left">ondemand_video</i>
+	        		Youtube
+	    		</a>
+	    	</li>
+	    	<li>
+	        	<a href="{% url 'webaccountmanager:dashboard' %}" title="Account Manager">
+	        		<i class="material-icons left">account_box</i>
+	        		Web Account
+	    		</a>
+	    	</li>
+	    	{% endif %}
+	    	<li>
+	    		{% if request.user %}
+	    		<a href="{% url 'webaccountmanager:dashboard' %}" title="Account Manager">
+	        		<i class="material-icons left">lock</i>
+	        		Logout
+	    		</a>
+	    		{% else %}
+	        	<a href="{% url 'webaccountmanager:dashboard' %}" title="Account Manager">
+	        		<i class="material-icons left">lock_open</i>
+	        		Login
+	    		</a>
+	    		{% endif %}
+	    	</li>
+	  </ul>
 
 	<div class="container">
 		{% block content %}
@@ -98,7 +173,8 @@
 			$('.fixed-action-btn').floatingActionButton();
 			$('select').formSelect();
 			$('.modal').modal();
-
+			$(".dropdown-trigger").dropdown();
+			$('.sidenav').sidenav();
 			$("body").on("click", ".modal-trigger", function(){
 				var acount_id = $(this).attr("data")
 				$("#account_id").val(acount_id)
@@ -106,5 +182,13 @@
 			})
 		});
 	</script>
+
+	<!-- <footer class="page-footer pink darken-4">
+		<div class="footer-copyright">
+			<div class="container">
+				© 2018 Copyright
+			</div>
+		</div>
+	</footer> -->
 </body>
 </html>

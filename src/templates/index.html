@@ -24,6 +24,12 @@
 			color: white !important;	
 		}
 
+		.custom-button{
+			height: 28px !important;
+			line-height: 29px !important;
+			padding: 0 6px !important;
+		}
+
 	body {
     display: flex;
     min-height: 100vh;
@@ -77,6 +83,12 @@
 	        	<a href="{% url 'webaccountmanager:dashboard' %}" title="Account Manager">
 	        		<i class="material-icons left">account_box</i>
 	        		Web Account
+	    		</a>
+	    	</li>
+	    	<li>
+	        	<a href="{% url 'grocery:dashboard' %}" title="Grocery Manager">
+	        		<i class="material-icons left">view_list</i>
+	        		Grocery
 	    		</a>
 	    	</li>
 	    	{% endif %}
@@ -133,6 +145,12 @@
 	        	<a href="{% url 'webaccountmanager:dashboard' %}" title="Account Manager">
 	        		<i class="material-icons left">account_box</i>
 	        		Web Account
+	    		</a>
+	    	</li>
+	    	<li>
+	        	<a href="{% url 'grocery:dashboard' %}" title="Grocery Manager">
+	        		<i class="material-icons left">view_list</i>
+	        		Grocery
 	    		</a>
 	    	</li>
 	    	{% endif %}

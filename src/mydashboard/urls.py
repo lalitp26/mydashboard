@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^commontodos/', include('todo.urls')),
     url(r'^youtube/', include('youtube.urls')),
     url(r'^webaccountmanager/', include('webaccountmanager.urls')),
+    url(r'^grocery/', include('grocery.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

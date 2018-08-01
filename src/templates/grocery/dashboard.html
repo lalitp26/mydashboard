@@ -1,0 +1,66 @@
+{% extends 'index.html' %}
+
+{% block title %}
+	<title>Grocery</title>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<blockquote>
+		<h4>Create Grocery</h4>	
+	</blockquote>
+	<div class="col s12 m6 l6 xl6">
+		<form method="POST">
+			<div class="card">
+		    	<div class="card-content">
+					{% csrf_token %}
+		    			{{grocery_form.non_field_errors }}	
+
+					{% for hidden_field in grocery_form.hidden_fields %}
+						{{ hidden_field.errors }}
+						{{ hidden_field }}
+					{% endfor %}
+
+					{% for field in grocery_form.visible_fields %}
+						<div class="input-field">
+							
+							{{ field.errors }}
+							{{ field }}
+							{{ field.help_text }}
+							<label>{{ field.label_tag }}</label>
+						</div>
+					{% endfor %}
+					<br>
+					<br>
+					<button type="submit" class="btn waves-effect pink darken-4">Add</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="col s12 m6 l6 xl6">
+		<ul class="collection">
+			{% if grocery_list %}
+				{% for grocery in grocery_list %}
+					<li class="collection-item">
+						<div class="pink-text darken-4">
+							<a href="{% url 'grocery:details' grocery.id %}">
+								{{ grocery.title }}		
+							</a>
+							<a href="{% url 'grocery:delete' grocery.id %}" class="secondary-content "><i class="material-icons pink-text text-darken-4">delete</i></a> 
+							<span class="secondary-content">
+								&nbsp;&nbsp;
+							</span>
+							<a href="{% url 'grocery:update' grocery.id %}" class="secondary-content "><i class="material-icons pink-text text-darken-4">edit</i></a> 
+						</div>
+				</li>
+				{% endfor %}
+			{% else %}
+				<li class="collection-item">
+					No grocery created
+				</li>
+			{% endif %}
+		</ul>
+	</div>
+</div>
+
+{% endblock %}

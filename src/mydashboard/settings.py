@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'todo.apps.TodoConfig',
     'youtube.apps.YoutubeConfig',
     'webaccountmanager.apps.WebaccountmanagerConfig',
+    'grocery.apps.GroceryConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -15,13 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-
+from .views import login_view
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
 	url(r'^', include('todo.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^login/', login_view, name="login"),
     url(r'^commontodos/', include('todo.urls')),
     url(r'^youtube/', include('youtube.urls')),
     url(r'^webaccountmanager/', include('webaccountmanager.urls')),

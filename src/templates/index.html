@@ -60,7 +60,7 @@
 	  		</a>
   		 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
-	        {% if request.user %}
+	        {% if request.user.is_authenticated %}
 	        <li>
 	        	<a href="{% url 'project' %}" title="Project Todo Manager">
 					<i class="material-icons left">star</i>
@@ -93,7 +93,7 @@
 	    	</li>
 	    	{% endif %}
 	    	<li>
-	    		{% if request.user %}
+	    		{% if request.user.is_authenticated %}
 	    		<a href="{% url 'webaccountmanager:dashboard' %}" title="Account Manager">
 	        		<i class="material-icons left">lock</i>
 	        		Logout
@@ -112,7 +112,7 @@
 <!-- Side nav Bar -->
 
 	  <ul class="sidenav pink darken-4" id="mobile-demo">
-	    {% if request.user %}
+	    {% if request.user.is_authenticated %}
 	    <li>
 			<div class="user-view">
 				<div class="background">
@@ -173,8 +173,8 @@
 		{% block content %}
 
 		{% endblock %}	
-
-
+		
+		{% if request.user.is_authenticated %}
 		<div class="fixed-action-btn">
 			<a class="btn-floating btn-large pink darken-4 pulse">
 				<i class="large material-icons">add</i>
@@ -184,6 +184,7 @@
 				<li><a href="{% url 'project' %}" class="btn-floating green" title="Add Project"><i class="material-icons">star</i></a></li>
 			</ul>
 		</div>
+		{% endif %}
 	</div>
 
 	<script type="text/javascript">

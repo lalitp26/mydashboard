@@ -197,7 +197,7 @@
 							</i>	
 				        </div>
 				        <div class="card-title col l8 center-align">
-				        	<div>
+				        	<div id="project_count">
 				        		{{ total_projects_count }}	
 				        	</div>
 				        	<div>
@@ -218,7 +218,7 @@
 							</i>	
 				        </div>
 				        <div class="card-title col l8 center-align">
-				        	<div>
+				        	<div id="todos_count">
 				        		{{ common_todo_count }}	
 				        	</div>
 				        	<div>
@@ -240,7 +240,7 @@
 							</i>	
 				        </div>
 				        <div class="card-title col l8 center-align">
-				        	<div>
+				        	<div id="account_count">
 				        		{{ web_account_count }}	
 				        	</div>
 				        	<div>
@@ -262,7 +262,7 @@
 							</i>	
 				        </div>
 				        <div class="card-title col l8 center-align">
-				        	<div>
+				        	<div id="grocery_count">
 				        		{{ grocery_count }}	
 				        	</div>
 				        	<div>
@@ -276,37 +276,183 @@
 			</div>
 		</div>
 	
+		<div class="row">
+			<div class="card col s12 m6 l6 xl4">
+				<div class="card-title">
+					Grocery Chart
+				</div>
+				<hr>
+				<canvas id="myChart" width="200" height="150"></canvas>
+		 	</div>	
+		 	<div class="card col s12 m6 l6 xl4">
+				<div class="card-title">
+					Youtube Chart
+				</div>
+				<hr>
+				<canvas id="youtubeChart" width="200" height="150"></canvas>
+		 	</div>	
+		</div>
 
 		<div class="row">
-			<div class="col l6">
-				<canvas id="myChart" width="400" height="400"></canvas>
-			</div>
+			<div class="col s12 m6 l6 xl4">
+		<ul class="collection with-header">
+			<li class="collection-header"><h5>Youtube</h5></li>
+			{% if youtube_list %}
+				{% for youtube in youtube_list %}
+					{% if youtube.is_downloaded %}
+					<li class="collection-item">
+						<div class="pink-text darken-4">
+							{{ youtube.name }}	
+							
+							<a href="{{youtube.url}}" target="_blank" class="secondary-content"><i class="material-icons pink-text text-darken-4">play_circle_filled</i></a>
+							{% if youtube.priority == 'H' %}
+								<span class="secondary-content">
+									&nbsp;&nbsp;
+								</span>
+								<span class="secondary-content new badge red darken-4" data-badge-caption="High">
+								</span>
+							{% elif youtube.priority == 'M' %}
+								<span class="secondary-content">
+									&nbsp;&nbsp;
+								</span>
+								<span class="secondary-content new badge orange darken-4" data-badge-caption="Medium">
+								</span>
+							{% else %}
+								<span class="secondary-content">
+									&nbsp;&nbsp;
+								</span>
+								<span class="secondary-content new badge blue darken-4" data-badge-caption="Low">
+								</span>
+
+							{% endif %}
+
+						</div>
+						
+					</li>
+					{% else %}
+						<li class="collection-item">
+							<div>
+								{{ youtube.name }}
+								<a href="{{youtube.url}}" target="_blank" class="secondary-content" title="Open"><i class="material-icons  pink-text text-darken-4">play_circle_filled</i></a>
+									{% if youtube.priority == 'H' %}
+									<span class="secondary-content">
+										&nbsp;&nbsp;
+									</span>
+									<span class="secondary-content new badge red darken-4" data-badge-caption="High">
+									</span>
+								{% elif youtube.priority == 'M' %}
+									<span class="secondary-content">
+										&nbsp;&nbsp;
+									</span>
+									<span class="secondary-content new badge orange darken-4" data-badge-caption="Medium">
+									</span>
+								{% else %}
+									<span class="secondary-content">
+										&nbsp;&nbsp;
+									</span>
+									<span class="secondary-content new badge blue darken-4" data-badge-caption="Low">
+									</span>
+
+								{% endif %}
+							</div>
+						</li>
+					{% endif %}
+				{% endfor %}
+			{% else %}
+				<li class="collection-item">
+					No Urls found
+				</li>
+
+			{% endif %}
+
+		</ul>
+
+	</div>
+	<div class="col s12 m6 l6 xl4">
+		<ul class="collection with-header">
+			<li class="collection-header"><h5>Project's</h5></li>
+		{% if projects %}
+
+				{% for project in projects %}
+	    		
+					<li class="collection-item">
+						<div>
+							{{ project.name }}
+							<a href="{% url 'project_todo' project.id %}" class="secondary-content pink-text text-darken-4" title="Add Todo's">
+								<i class="material-icons">send</i>
+							</a>
+						</div>
+					</li>
+	    	
+	    		{% endfor %}
+	    	
+		{% endif %}	
+		</ul>	
+	</div>
+
+	<div class="col s12 m6 l6 xl4">
+		<ul class="collection with-header">
+			<li class="collection-header"><h5>Todo's</h5></li>
+		{% for todo in common_todo_list %}
+			{% if todo.is_completed %}
+				<li class="collection-item">
+				<div>
+						<del>{{todo.title}}</del>
+						<!-- <a class="secondary-content" href="{% url 'delete_todo' todo.id  'other' %}"><i class="material-icons red-text text-darken-2">delete</i></a> -->
+						<!-- <a class="secondary-content" href="{% url 'change_common_todo_status' todo.id  'other'%}"><i class="material-icons pink-text text-darken-4">close</i></a> -->
+						
+					</div>
+				</li>
+			{% else %}
+				<li class="collection-item">
+					<div>
+						{{todo.title}}
+						<!-- <a class="secondary-content" href="{% url 'delete_todo' todo.id  'other' %}"><i class="material-icons red-text text-darken-2">delete</i></a> -->
+						<!-- <a class="secondary-content" href="{% url 'change_common_todo_status' todo.id  'other'%}"><i class="material-icons pink-text text-darken-4">check_circle</i></a> -->
+					</div>
+				</li>
+			{% endif %}
+		{% endfor %}
+	</ul>
 		</div>
+		</div>
+		 
+			
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 		<script type="text/javascript">
-			var ctx = document.getElementById("myChart");
+
+	var url = "chart/api/dashboard/";
+	$.ajax
+	({
+	  type: "GET",
+	  url: url,
+	  success: function(data)
+	  {
+
+	     var labels = data.grocery.grocery_names_list
+	     var chart_data = data.grocery.grcoery_amount_list
+	     console.log(chart_data)
+	    var ctx = document.getElementById("myChart");
 		var myChart = new Chart(ctx, {
 		    type: 'bar',
 		    data: {
-		        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+		        labels: labels,
 		        datasets: [{
-		            label: '# of Votes',
-		            data: [12, 19, 3, 5, 2, 3],
+		            label: 'Grocery',
+		            data: chart_data,
 		            backgroundColor: [
 		                'rgba(255, 99, 132, 0.2)',
 		                'rgba(54, 162, 235, 0.2)',
 		                'rgba(255, 206, 86, 0.2)',
 		                'rgba(75, 192, 192, 0.2)',
-		                'rgba(153, 102, 255, 0.2)',
-		                'rgba(255, 159, 64, 0.2)'
+		                'rgba(153, 102, 255, 0.2)'
 		            ],
 		            borderColor: [
 		                'rgba(255,99,132,1)',
 		                'rgba(54, 162, 235, 1)',
 		                'rgba(255, 206, 86, 1)',
 		                'rgba(75, 192, 192, 1)',
-		                'rgba(153, 102, 255, 1)',
-		                'rgba(255, 159, 64, 1)'
+		                'rgba(153, 102, 255, 1)'
 		            ],
 		            borderWidth: 1
 		        }]
@@ -321,6 +467,49 @@
 		        }
 		    }
 		});
+
+		var youtube_labels = data.youtube_info.labels
+		var youtube_data = data.youtube_info.chart_data
+		
+		var ctx2 = document.getElementById("youtubeChart");
+		var myChart2 = new Chart(ctx2, {
+		    type: 'pie',
+		    data: {
+		        labels: youtube_labels,
+		        datasets: [{
+		            label: 'Grocery',
+		            data: youtube_data,
+		            backgroundColor: [
+		                'rgba(255, 99, 132, 0.2)',
+		                'rgba(54, 162, 235, 0.2)',
+		                'rgba(255, 206, 86, 0.2)',
+		                'rgba(75, 192, 192, 0.2)',
+		                'rgba(153, 102, 255, 0.2)'
+		            ],
+		            borderColor: [
+		                'rgba(255,99,132,1)',
+		                'rgba(54, 162, 235, 1)',
+		                'rgba(255, 206, 86, 1)',
+		                'rgba(75, 192, 192, 1)',
+		                'rgba(153, 102, 255, 1)'
+		            ],
+		            borderWidth: 1
+		        }]
+		    },
+		    options: {
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero:true
+		                }
+		            }]
+		        }
+		    }
+		});
+
+			  }
+	});
+
 		</script>
 		{% endblock %}	
 		

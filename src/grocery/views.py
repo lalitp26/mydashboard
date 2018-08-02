@@ -72,7 +72,6 @@ def details(request, grocery_id):
 		grocery_items_form = GroceryItemForm(request.POST or None)
 		
 		if grocery:
-
 			if request.method == "POST":
 				if grocery_items_form.is_valid():
 					instance = grocery_items_form.save(commit = False)
@@ -80,14 +79,16 @@ def details(request, grocery_id):
 					instance.save()
 
 					return redirect("grocery:details", grocery_id)
+				else:
+					#Validatin errors
+					print(grocery_items_form.errors)
 			else:
 				context = {
 					"grocery":grocery,
 					"grocery_items_form":grocery_items_form
 				}
 
-			return render(request, "grocery/details.html", context)
-
+				return render(request, "grocery/details.html", context)
 		else:
 			#Grocery not found error
 			return redirect("grocery:dashboard")

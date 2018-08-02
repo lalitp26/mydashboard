@@ -6,7 +6,8 @@ class GroceryForm(forms.ModelForm):
 		model = Grocery
 		exclude = ["owner"]
 		widgets = {
-			'title' : forms.TextInput(attrs={'class':'form-control col-lg-6'})
+			'title' : forms.TextInput(attrs={'class':'form-control col-lg-6'}),
+			'total_amount' : forms.TextInput(attrs={'id':'disabled', "disabled":"disabled"})
 		}
 
 class GroceryItemForm(forms.ModelForm):

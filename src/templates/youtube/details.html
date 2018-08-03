@@ -1,0 +1,114 @@
+{% extends 'index.html' %}
+{% load static %}
+
+
+{% block title %}
+	<title>Video Details</title>
+{% endblock %}
+
+{% block content %}
+	<div class="row" style="padding-top: 20px;">
+		
+		<div class="col s12 m12 l4 xl4">
+			<div class="card-panel center-align">
+				<img class="" src="{% static 'user.png' %}">	
+
+				
+			</div>
+			<div class="col l6 center-align" title="Total Videos">
+				<div class="deep-purple darken-4 z-depth-2 white-text" style="padding: 5px; margin: 10px;border-radius: 5px;">
+					<b>{{ youtube.total_videos }}</b>	
+				</div>
+				
+			</div>
+			<div class="col l6 center-align" title="Downloaded Videos">
+				<div class="blue darken-4 white-text z-depth-2" style="padding: 5px; margin: 10px;border-radius: 5px;">
+					<b>{{ youtube.downloaded_videos }}</b>
+				</div>
+			</div>
+
+			{% if youtube.is_downloaded %}
+				<div class="col s12 m12 l12 xl12 center-align blue darken-4 white-text z-depth-2" title="Downloaded status" style="padding: 5px;border-radius: 5px;">
+					<span>Downloaded</span>
+				</div>
+			{% else %}
+				<div class="col s12 m12 l12 xl12 center-align red darken-4 white-text z-depth-2" title="Downloaded status" style="padding: 5px;border-radius: 5px;">
+					<span>Not Downloaded</span>
+				</div>
+			{% endif %}
+			
+			
+			
+		</div>
+
+		<div class="col s12 m12 l8 xl8">
+			<div class="card">
+				<div class="card-content">
+				<div class="row">
+					<div class="">
+						<div class="col l9 ">
+							<h5>{{ youtube.name }}</h5>
+						</div>
+						<div class="col l3">
+							{% if youtube.priority == 'H' %}
+								<div class="col s12 m12 l12 xl12 center-align red darken-4 white-text z-depth-2" title="Download priority" style="padding: 5px; margin: 10px;border-radius: 5px;">
+									<span>High</span>
+								</div>
+							{% elif youtube.priority == 'M' %}
+								<div class="col s12 m12 l12 xl12 center-align blue darken-4 white-text z-depth-2" title="Download priority" style="padding: 5px; margin: 10px;border-radius: 5px;">
+									<span>Medium</span>
+								</div>
+							{% else %}
+								<div class="col s12 m12 l12 xl12 center-align orange darken-4 white-text z-depth-2" title="Download priority" style="padding: 5px; margin: 10px;border-radius: 5px;">
+										<span>Low</span>
+									</div>
+							{% endif %}
+						</div>	
+					</div>
+					<div class="youtube-content" style="background-color: #eceff1">
+						<div class="col s6 m4 l4 xl4">
+							<span>Url </span>
+						</div>
+						<div class="col s6 m8 l8 xl8">
+							{{ youtube.url }}	
+						</div>
+					</div>
+					
+					<div class="youtube-content" style="background-color: #eceff1">
+						<div class="col s6 m4 l4 xl4">
+							<span>Description </span>
+						</div>
+						<div class="col s6 m8 l8 xl8">
+							{{ youtube.description |default:"No description available" }}	
+						</div>
+					</div>
+
+					<div class="youtube-content" style="background-color: #eceff1">
+						<div class="col s6 m4 l4 xl4">
+							<span>Author </span>
+						</div>
+						<div class="col s6 m8 l8 xl8">
+							{{ youtube.author |default:"No Author"}}
+						</div>
+					</div>
+				</div>
+				<div class="card-action right-align">
+					<a href="{% url 'youtube:edit' youtube.id %}" class="btn pink darken">
+					Edit
+					<i class="material-icons white-text left">edit</i>
+					</a>
+					<a href="{% url 'youtube:delete' youtube.id %}" class="btn pink darken">
+						Delete
+						<i class="material-icons white-text left">delete</i>
+					</a>
+					<a href="{{youtube.url}}" target="_blank" class="btn pink darken">
+						Play
+						<i class="material-icons white-text left">play_circle_filled</i>
+					</a>
+				</div>
+			</div>
+
+			</div>
+		</div>
+	</div>
+{% endblock %}

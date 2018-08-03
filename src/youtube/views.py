@@ -60,3 +60,20 @@ def delete_youtube(request, youtube_id):
 			pass
 	else:
 		pass
+
+
+def details(request, youtube_id):
+	if youtube_id:
+		youtube = Youtube.objects.get(id = youtube_id)
+
+		if youtube:
+
+			context = {
+				"youtube": youtube			
+			}
+
+			return render(request, 'youtube/details.html', context)
+		else:
+			return redirect("youtube:dashboard")
+	else:
+			return redirect("youtube:dashboard")

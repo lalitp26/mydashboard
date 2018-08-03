@@ -34,6 +34,7 @@ def chart_dashboard(request):
 			"youtube_list":youtube_list,
 			"projects":projects,
 			"common_todo_list":common_todos,
+			"web_accounts":web_accounts,
 			"total_projects_count":total_projects_count,
 			"common_todo_count":common_todo_count,
 			"web_account_count":web_account_count,

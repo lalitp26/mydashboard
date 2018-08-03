@@ -15,11 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from .views import login_view, chart_dashboard, chart
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-	url(r'^', include('todo.urls')),
+	url(r'^$', chart_dashboard, name ="main_dashboard"),
+    url(r'^chart/api/dashboard/$', chart),
     url(r'^admin/', admin.site.urls),
+    url(r'^login/', login_view, name="login"),
     url(r'^commontodos/', include('todo.urls')),
     url(r'^youtube/', include('youtube.urls')),
-    url(r'^passwordmanager/', include('passwordmanager.urls')),
-]
+    url(r'^webaccountmanager/', include('webaccountmanager.urls')),
+    url(r'^grocery/', include('grocery.urls')),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,6 +7,7 @@
 	{% endblock %}
 
 	<style type="text/css">
+
 		.completed {
 			color = red;
 		}
@@ -13,6 +15,47 @@
 		blockquote{
 			border-left: 5px solid #880e4f !important;
 		}
+
+		.sidenav li>a{
+			color: white !important;
+		}
+
+		.sidenav li>a>i{
+			color: white !important;	
+		}
+
+		.custom-button{
+			height: 28px !important;
+			line-height: 29px !important;
+			padding: 0 6px !important;
+		}
+
+		.card-widget{
+			padding: 10px;
+			margin-top: 10px;
+			border-radius: 5px;
+			/*margin: 5px;*/
+		}
+		
+		.youtube-content > div {
+			font-size: 20px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+
+		.youtube-content > div >span{
+			color: grey;
+			font-size: 20px;
+		}
+	body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
 	</style>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 	<!--Import Google Icon Font-->
@@ -25,15 +68,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
 </head>
 <body>
-	  <nav class="pink darken-4">
+	  <nav class="pink darken-4 nav-extended">
 
 	    <div class="nav-wrapper container">
 	      	<a href="/" class="brand-logo">
 	      		<i class="large material-icons">laptop_windows</i>
 	      		My-Dash
 	  		</a>
+  		 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
-	        {% if request.user %}
+	        {% if request.user.is_authenticated %}
 	        <li>
 	        	<a href="{% url 'project' %}" title="Project Todo Manager">
 					<i class="material-icons left">star</i>
@@ -53,20 +97,26 @@
 	    		</a>
 	    	</li>
 	    	<li>
-	        	<a href="{% url 'passmanager:dashboard' %}" title="Account Manager">
+	        	<a href="{% url 'webaccountmanager:dashboard' %}" title="Account Manager">
 	        		<i class="material-icons left">account_box</i>
 	        		Web Account
 	    		</a>
 	    	</li>
+	    	<li>
+	        	<a href="{% url 'grocery:dashboard' %}" title="Grocery Manager">
+	        		<i class="material-icons left">view_list</i>
+	        		Grocery
+	    		</a>
+	    	</li>
 	    	{% endif %}
 	    	<li>
-	    		{% if request.user %}
-	    		<a href="{% url 'passmanager:dashboard' %}" title="Account Manager">
+	    		{% if request.user.is_authenticated %}
+	    		<a href="{% url 'webaccountmanager:dashboard' %}" title="Account Manager">
 	        		<i class="material-icons left">lock</i>
 	        		Logout
 	    		</a>
 	    		{% else %}
-	        	<a href="{% url 'passmanager:dashboard' %}" title="Account Manager">
+	        	<a href="{% url 'webaccountmanager:dashboard' %}" title="Account Manager">
 	        		<i class="material-icons left">lock_open</i>
 	        		Login
 	    		</a>
@@ -76,12 +126,424 @@
 	    </div>
 	  </nav>
 
+<!-- Side nav Bar -->
+
+	  <ul class="sidenav pink darken-4" id="mobile-demo">
+	    {% if request.user.is_authenticated %}
+	    <li>
+			<div class="user-view">
+				<div class="background">
+				    <img src="{% static 'profile.png' %}" >
+				</div>
+				<a href="#user"><img class="circle" src="{% static 'user.png' %}"></a>
+				<a href="#name"><span class="white-text name">{{ request.user }}</span></a>
+				<!-- <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a> -->
+			</div>
+		</li>
+	        <li>
+	        	<a href="{% url 'project' %}" title="Project Todo Manager">
+					<i class="material-icons left">star</i>
+					Project
+	        	</a>
+	        </li>
+	        <li>
+	        	<a href="{% url 'todo' %}" title="Todo Manager">
+	        		<i class="material-icons left">gps_fixed</i>
+	        		Todo's
+	        	</a>
+	        </li>
+	        <li>
+	        	<a href="{% url 'youtube:dashboard' %}" title="Youtube Manager">
+	        		<i class="material-icons left">ondemand_video</i>
+	        		Youtube
+	    		</a>
+	    	</li>
+	    	<li>
+	        	<a href="{% url 'webaccountmanager:dashboard' %}" title="Account Manager">
+	        		<i class="material-icons left">account_box</i>
+	        		Web Account
+	    		</a>
+	    	</li>
+	    	<li>
+	        	<a href="{% url 'grocery:dashboard' %}" title="Grocery Manager">
+	        		<i class="material-icons left">view_list</i>
+	        		Grocery
+	    		</a>
+	    	</li>
+	    	{% endif %}
+	    	<li>
+	    		{% if request.user %}
+	    		<a href="{% url 'webaccountmanager:dashboard' %}" title="Account Manager">
+	        		<i class="material-icons left">lock</i>
+	        		Logout
+	    		</a>
+	    		{% else %}
+	        	<a href="{% url 'webaccountmanager:dashboard' %}" title="Account Manager">
+	        		<i class="material-icons left">lock_open</i>
+	        		Login
+	    		</a>
+	    		{% endif %}
+	    	</li>
+	  </ul>
+
 	<div class="container">
 		{% block content %}
 
+		<div class="row">
+			<div class="col s12 m4 l3 xl3">
+				<div class="card-widget purple darken-4  white-text z-depth-2">
+					<div class="row valign-wrapper">
+						<div class="col l4 " style="margin-top: 8px;border-right: 1px solid white">
+							<i class="medium material-icons">
+								star
+							</i>	
+				        </div>
+				        <div class="card-title col l8 center-align">
+				        	<div id="project_count">
+				        		{{ total_projects_count }}	
+				        	</div>
+				        	<div>
+				        		<a href="{% url 'project' %}" style="color: white">
+				        			Project's		
+				        		</a>
+				        	</div>
+				        </div>	
+					</div>
+				</div>
+			</div>
+			<div class="col s12 m4 l3 xl3">
+				<div class="card-widget grey darken-4 white-text z-depth-2">
+					<div class="row valign-wrapper">
+						<div class="col l4 " style="margin-top: 8px;border-right: 1px solid white">
+							<i class="medium material-icons">
+								gps_fixed
+							</i>	
+				        </div>
+				        <div class="card-title col l8 center-align">
+				        	<div id="todos_count">
+				        		{{ common_todo_count }}	
+				        	</div>
+				        	<div>
+				        		<a href="{% url 'todo' %}" style="color: white">
+				        			Todo's	
+				        		</a>
+				        	</div>
+				        </div>	
+					</div>
+				</div>
+			</div>
+
+			<div class="col s12 m4 l3 xl3">
+				<div class="card-widget deep-orange accent-4 white-text z-depth-2">
+					<div class="row valign-wrapper">
+						<div class="col l4 " style="margin-top: 8px;border-right: 1px solid white">
+							<i class="medium material-icons">
+								account_box
+							</i>	
+				        </div>
+				        <div class="card-title col l8 center-align">
+				        	<div id="account_count">
+				        		{{ web_account_count }}	
+				        	</div>
+				        	<div>
+				        		<a href="{% url 'webaccountmanager:dashboard' %}" style="color: white">
+				        			Account's	
+				        		</a>
+				        	</div>
+				        </div>	
+					</div>
+				</div>
+			</div>
+
+			<div class="col s12 m4 l3 xl3">
+				<div class="card-widget cyan darken-4 white-text z-depth-2">
+					<div class="row valign-wrapper">
+						<div class="col l4 " style="margin-top: 8px;border-right: 1px solid white">
+							<i class="medium material-icons">
+								view_lists
+							</i>	
+				        </div>
+				        <div class="card-title col l8 center-align">
+				        	<div id="grocery_count">
+				        		{{ grocery_count }}	
+				        	</div>
+				        	<div>
+				        		<a href="{% url 'grocery:dashboard' %}" style="color: white">
+				        			Grocerie's	
+				        		</a>
+				        	</div>
+				        </div>	
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<div class="row">
+			<div class="col s12 m6 l6 xl4">
+				<div class="card">
+					<div class="card-title center-align">
+						Grocery Chart
+					</div>
+					<hr>
+					<canvas id="myChart" width="200" height="150"></canvas>
+			 	</div>		
+			</div>
+			<div class="col s12 m6 l6 xl4">
+				<div class="card">
+					<div class="card-title center-align">
+						Youtube Chart
+					</div>
+					<hr>
+					<canvas id="youtubeChart" width="200" height="150"></canvas>
+			 	</div>		
+			</div>
+			
+		 	
+		</div>
+
+		<div class="row">
+			<div class="col s12 m6 l6 xl4">
+		<ul class="collection with-header">
+			<li class="collection-header"><h5>Youtube</h5></li>
+			{% if youtube_list %}
+				{% for youtube in youtube_list %}
+					{% if youtube.is_downloaded %}
+					<li class="collection-item">
+						<div class="pink-text darken-4">
+							{{ youtube.name }}	
+							
+							<a href="{{youtube.url}}" target="_blank" class="secondary-content"><i class="material-icons pink-text text-darken-4">play_circle_filled</i></a>
+							{% if youtube.priority == 'H' %}
+								<span class="secondary-content">
+									&nbsp;&nbsp;
+								</span>
+								<span class="secondary-content new badge red darken-4" data-badge-caption="High">
+								</span>
+							{% elif youtube.priority == 'M' %}
+								<span class="secondary-content">
+									&nbsp;&nbsp;
+								</span>
+								<span class="secondary-content new badge orange darken-4" data-badge-caption="Medium">
+								</span>
+							{% else %}
+								<span class="secondary-content">
+									&nbsp;&nbsp;
+								</span>
+								<span class="secondary-content new badge blue darken-4" data-badge-caption="Low">
+								</span>
+
+							{% endif %}
+
+						</div>
+						
+					</li>
+					{% else %}
+						<li class="collection-item">
+							<div>
+								{{ youtube.name }}
+								<a href="{{youtube.url}}" target="_blank" class="secondary-content" title="Open"><i class="material-icons  pink-text text-darken-4">play_circle_filled</i></a>
+									{% if youtube.priority == 'H' %}
+									<span class="secondary-content">
+										&nbsp;&nbsp;
+									</span>
+									<span class="secondary-content new badge red darken-4" data-badge-caption="High">
+									</span>
+								{% elif youtube.priority == 'M' %}
+									<span class="secondary-content">
+										&nbsp;&nbsp;
+									</span>
+									<span class="secondary-content new badge orange darken-4" data-badge-caption="Medium">
+									</span>
+								{% else %}
+									<span class="secondary-content">
+										&nbsp;&nbsp;
+									</span>
+									<span class="secondary-content new badge blue darken-4" data-badge-caption="Low">
+									</span>
+
+								{% endif %}
+							</div>
+						</li>
+					{% endif %}
+				{% endfor %}
+			{% else %}
+				<li class="collection-item">
+					No Urls found
+				</li>
+
+			{% endif %}
+
+		</ul>
+
+	</div>
+	<div class="col s12 m6 l6 xl4">
+		<ul class="collection with-header">
+			<li class="collection-header"><h5>Project's</h5></li>
+		{% if projects %}
+
+				{% for project in projects %}
+	    		
+					<li class="collection-item">
+						<div>
+							{{ project.name }}
+							<a href="{% url 'project_todo' project.id %}" class="secondary-content pink-text text-darken-4" title="Add Todo's">
+								<i class="material-icons">send</i>
+							</a>
+						</div>
+					</li>
+	    	
+	    		{% endfor %}
+	    	
+		{% endif %}	
+		</ul>	
+	</div>
+
+	<div class="col s12 m6 l6 xl4">
+		<ul class="collection with-header">
+			<li class="collection-header"><h5>Todo's</h5></li>
+		{% for todo in common_todo_list %}
+			{% if todo.is_completed %}
+				<li class="collection-item">
+				<div>
+						<del>{{todo.title}}</del>
+						<!-- <a class="secondary-content" href="{% url 'delete_todo' todo.id  'other' %}"><i class="material-icons red-text text-darken-2">delete</i></a> -->
+						<!-- <a class="secondary-content" href="{% url 'change_common_todo_status' todo.id  'other'%}"><i class="material-icons pink-text text-darken-4">close</i></a> -->
+						
+					</div>
+				</li>
+			{% else %}
+				<li class="collection-item">
+					<div>
+						{{todo.title}}
+						<!-- <a class="secondary-content" href="{% url 'delete_todo' todo.id  'other' %}"><i class="material-icons red-text text-darken-2">delete</i></a> -->
+						<!-- <a class="secondary-content" href="{% url 'change_common_todo_status' todo.id  'other'%}"><i class="material-icons pink-text text-darken-4">check_circle</i></a> -->
+					</div>
+				</li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+		</div>
+
+
+		
+		</div>
+
+		<div class="row">
+			<div class="col s12 m6 l6 xl4">
+			<blockquote>
+				<h5>Web Account's</h5>	
+			</blockquote>
+			<ul class="collection">
+			{% if web_accounts %}
+			
+				{% for account in web_accounts %}
+	    		
+					<li class="collection-item">
+						<div>
+							<a href="{% url 'webaccountmanager:detail' account.id %}">{{ account.title }}</a>
+							<a href="#modal1" data="{{ account.id }}" class="secondary-content modal-trigger" title="Send Password"><i class="material-icons pink-text text-darken-4">sms</i></a> 
+						</div>
+					</li>
+	    	
+	    		{% endfor %}
+	    	
+	    	{% else %}
+				<li class="collection-item">	
+					No Account found
+				</li>
+			{% endif %}		
+		</ul>
+	</div>
+		</div>
+		 
+			
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+		<script type="text/javascript">
+
+	var url = "chart/api/dashboard/";
+	$.ajax
+	({
+	  type: "GET",
+	  url: url,
+	  success: function(data)
+	  {
+
+	     var labels = data.grocery.grocery_names_list
+	     var chart_data = data.grocery.grcoery_amount_list
+	     console.log(chart_data)
+	    var ctx = document.getElementById("myChart");
+		var myChart = new Chart(ctx, {
+		    type: 'bar',
+		    data: {
+		        labels: labels,
+		        datasets: [{
+		            label: 'Grocery',
+		            data: chart_data,
+		            backgroundColor: [
+		                '#3949ab',
+		                '#42a5f5',
+		                'rgba(255, 206, 86, 0.2)',
+		                'rgba(75, 192, 192, 0.2)',
+		                'rgba(153, 102, 255, 0.2)'
+		            ],
+		            borderColor: [
+		                '#1a237e',
+		                '#0d47a1',
+		                'rgba(255, 206, 86, 1)',
+		                'rgba(75, 192, 192, 1)',
+		                'rgba(153, 102, 255, 1)'
+		            ],
+		            borderWidth: 1
+		        }]
+		    },
+		    options: {
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero:true
+		                }
+		            }]
+		        }
+		    }
+		});
+
+		var youtube_labels = data.youtube_info.labels
+		var youtube_data = data.youtube_info.chart_data
+		
+		var ctx2 = document.getElementById("youtubeChart");
+		var myChart2 = new Chart(ctx2, {
+		    type: 'pie',
+		    data: {
+		        labels: youtube_labels,
+		        datasets: [{
+		            label: 'Grocery',
+		            data: youtube_data,
+		            backgroundColor: [
+		                '#880e4f',
+		                '#004d40',
+		                'rgba(255, 206, 86, 0.2)',
+		                'rgba(75, 192, 192, 0.2)',
+		                'rgba(153, 102, 255, 0.2)'
+		            ],
+		            borderColor: [
+		                '#880e4f',
+		                '#004d40',
+		                'rgba(255, 206, 86, 1)',
+		                'rgba(75, 192, 192, 1)',
+		                'rgba(153, 102, 255, 1)'
+		            ],
+		            borderWidth: 1
+		        }]
+		    }
+		});
+
+			  }
+	});
+
+		</script>
 		{% endblock %}	
-
-
+		
+		{% if request.user.is_authenticated %}
 		<div class="fixed-action-btn">
 			<a class="btn-floating btn-large pink darken-4 pulse">
 				<i class="large material-icons">add</i>
@@ -91,13 +553,35 @@
 				<li><a href="{% url 'project' %}" class="btn-floating green" title="Add Project"><i class="material-icons">star</i></a></li>
 			</ul>
 		</div>
-	</div>
+		{% endif %}
 
+		
+	</div>
+	
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$('.fixed-action-btn').floatingActionButton();
 			$('select').formSelect();
+			$('.modal').modal();
+			$(".dropdown-trigger").dropdown();
+			$('.sidenav').sidenav();
+			$("body").on("click", ".modal-trigger", function(){
+				var acount_id = $(this).attr("data")
+				$("#account_id").val(acount_id)
+
+			})
 		});
+
+
+		
 	</script>
+
+	<!-- <footer class="page-footer pink darken-4">
+		<div class="footer-copyright">
+			<div class="container">
+				© 2018 Copyright
+			</div>
+		</div>
+	</footer> -->
 </body>
 </html>

@@ -1,0 +1,88 @@
+{% extends 'index.html' %}
+
+{% block title %}
+	<title>Grocery Details</title>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<blockquote>
+		<h4>{{ grocery.title }}</h4>	
+		<a class="custom-button btn pink darken-4" href="#">
+			Total:- {{ grocery.total_amount }} /-
+		</a>
+		&nbsp;&nbsp;		
+		<a class="custom-button btn pink darken-4" href="{% url 'grocery:delete' grocery.id %}">
+			delete
+		</a>
+		&nbsp;&nbsp;
+		<a class="custom-button btn pink darken-4" href="{% url 'grocery:update' grocery.id %}">
+			edit
+		</a>
+	</blockquote>
+
+	<div class="col s12 m6 l6 xl6">
+		<form method="POST">
+			<div class="card">
+		    	<div class="card-content">
+					{% csrf_token %}
+		    			{{grocery_items_form.non_field_errors }}	
+
+					{% for hidden_field in grocery_items_form.hidden_fields %}
+						{{ hidden_field.errors }}
+						{{ hidden_field }}
+					{% endfor %}
+
+					{% for field in grocery_items_form.visible_fields %}
+						{% if field.html_name != 'is_purchased' %}
+							<div class="input-field">
+								
+								{{ field.errors }}
+								{{ field }}
+								{{ field.help_text }}
+								<label>{{ field.label_tag }}</label>
+							</div>
+						{% else %}
+						<div class="input-field">
+							<label>
+								{{ field.errors }}
+								{{ field }}
+							    <span>{{ field.label_tag }}</span>
+							    {{ field.help_text }}
+							  </label>
+						</div>
+						{% endif %}
+					{% endfor %}
+					<br>
+					<br>
+					<button type="submit" class="btn waves-effect pink darken-4">Add</button>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+
+	<div class="col s12 m6 l6 xl6">
+		<ul class="collection">
+			{% if grocery.grocerylist_set.all %}
+				{% for grocery_item in grocery.grocerylist_set.all %}
+					<li class="collection-item">
+						<div class="pink-text darken-4">
+							{{ grocery_item.name }}		
+							<a href="{% url 'grocery:delete_item' grocery.id grocery_item.id %}" class="secondary-content "><i class="material-icons pink-text text-darken-4">delete</i></a> 
+							<span class="secondary-content">
+								&nbsp;&nbsp;
+							</span>
+							<a href="{% url 'grocery:update_item' grocery.id grocery_item.id %}" class="secondary-content "><i class="material-icons pink-text text-darken-4">edit</i></a> 
+						</div>
+				</li>
+				{% endfor %}
+			{% else %}
+				<li class="collection-item">
+					No grocery items created
+				</li>
+			{% endif %}
+		</ul>
+	</div>
+</div>
+{% endblock %}

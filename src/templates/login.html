@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+  </head>
+  <body>
+
+  	<div class="row" style="margin-top: 15%;">
+      <div class="offset-l3 col s12 m6 l6">
+        <div class="card-panel">
+          <div class="card-title pink-text text-darken-4" style="border-bottom: 2px solid #880e4f">
+            <h3 class="center-align">Login</h3>
+          </div>
+          <br>
+  		    <form action="" method="POST">
+            {% csrf_token %}
+            <div class="input-field">
+              <input placeholder="User Name" id="user_name" type="text" class="validate">
+              <label for="user_name">User Name</label>
+            </div>        
+            <div class="input-field">
+              <input placeholder="Password" id="password" type="text" class="validate">
+              <label for="password">Password</label>
+            </div>
+            <button class="btn pink darken-4" type="submit">Login</button>    
+          </form>      
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

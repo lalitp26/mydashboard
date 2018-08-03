@@ -58,8 +58,10 @@
 				{% for youtube in youtube_list %}
 					{% if youtube.is_downloaded %}
 					<li class="collection-item">
-						<div class="teal-text">
-							{{ youtube.name }}	
+						<div class="pink-text darken-4">
+							<a href="{% url 'youtube:details' youtube.id %}">
+								{{ youtube.name }}
+							</a>
 							<a href="{% url 'youtube:delete' youtube.id %}" class="secondary-content "><i class="material-icons pink-text text-darken-4">delete</i></a> 
 							<span class="secondary-content">
 								&nbsp;&nbsp;
@@ -96,7 +98,9 @@
 					{% else %}
 						<li class="collection-item">
 							<div>
-								{{ youtube.name }}
+								<a href="{% url 'youtube:details' youtube.id %}">
+									{{ youtube.name }}
+								</a>
 								<a href="{% url 'youtube:delete' youtube.id %}" class="secondary-content " title="Delete"><i class="material-icons pink-text text-darken-4">delete</i></a> 
 								<span class="secondary-content">
 									&nbsp;&nbsp;

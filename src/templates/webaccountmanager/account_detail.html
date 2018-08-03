@@ -1,0 +1,47 @@
+{% extends 'index.html' %}
+
+{% block title %}
+	<title>Account Details</title>
+{% endblock %}
+
+{% block content %}
+<div class="col s12 m6 l6 xl6">
+	<blockquote>
+		<h5>Account Details</h5>	
+	</blockquote>
+
+	<div class="card col s12 m6 l6 xl6">
+        <div class="card-content">
+		<span class="">
+          <label>Account:- </label> {{ account.title }}
+  		</span>
+          <span class="">{{ account.user_name }}</span>
+          <span class="">{{ account.account_url }}</span>
+        </div>
+        <div class="card-action">
+          <a href="{% url 'webaccountmanager:delete' account.id %}">Delete</a>
+          <a href="{% url 'webaccountmanager:update' account.id %}">Edit</a>
+          <a href="#modal1" data="{{ account.id }}" class="modal-trigger">Send Password</a>
+        </div>
+    </div>
+
+</div>
+
+ <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h5>Enter Password</h5>
+      <form action="{% url 'webaccountmanager:send_password' %}" method="POST">
+      	{% csrf_token %}
+      
+  		<input type="hidden" id="account_id" name="account_id">
+	  	<input type="password" id="password" name="password" placeholder="Enter Password">
+	  	<button type="submit" class="modal-close waves-effect waves-pink btn pink darken-4">
+	  		<i class="material-icons">send</i>
+	  		Send
+	  	</button>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

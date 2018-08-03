@@ -1,0 +1,112 @@
+{% extends 'index.html' %}
+
+{% block title %}
+	<title>DashBoard</title>
+{% endblock %}
+
+
+{% block content %}
+	<div class="row">
+			
+		<div class="col s12 m6 l6 xl6">
+			<blockquote>
+				<h5>Add Account</h5>	
+			</blockquote>
+			<div class="card">
+		        <div class="card-content">
+		          	<form method="POST">
+					{% csrf_token %}
+
+					{% if messages %}
+						<ul>
+						   {% for message in messages %}
+						   		<script type="text/javascript">
+						   			M.toast({
+						   				html: '<b>{{ message }}</b>',
+						   				"classes": "pink darken-4"
+						   			})
+						   		</script>
+							   <!-- <li>{{ message }}</li> -->
+						   {% endfor %}
+						</ul>
+					{% endif %}
+						
+					{{password_form.non_field_errors }}	
+
+					{% for hidden_field in password_form.hidden_fields %}
+						{{ hidden_field.errors }}
+						{{ hidden_field }}
+					{% endfor %}
+
+					{% for field in password_form.visible_fields %}
+						<div class="input-field">
+							
+							{{ field.errors }}
+							{{ field }}
+							{{ field.help_text }}
+							<label>{{ field.label_tag }}</label>
+						</div>
+	
+					{% endfor %}
+					<button type="submit" class="btn waves-effect pink darken-4">Add</button>
+					</form>
+		        </div>
+		    </div>
+		</div>
+
+		<div class="col s12 m6 l6 xl6">
+			<blockquote>
+				<h5>Available Account's</h5>	
+			</blockquote>
+			<ul class="collection">
+			{% if password_list %}
+			
+				{% for password in password_list %}
+	    		
+					<li class="collection-item">
+						<div>
+							<a href="{% url 'webaccountmanager:detail' password.id %}">{{ password.title }}</a>
+							
+							<a href="{% url 'webaccountmanager:delete' password.id %}" class="secondary-content " title="Delete"><i class="material-icons pink-text text-darken-4">delete</i></a> 
+							<span class="secondary-content">
+								&nbsp;&nbsp;
+							</span>
+							<a href="{% url 'webaccountmanager:update' password.id %}" class="secondary-content " title="Edit"><i class="material-icons pink-text text-darken-4">edit</i></a> 
+							<span class="secondary-content">
+								&nbsp;&nbsp;
+							</span>
+							<a href="#modal1" data="{{ password.id }}" class="secondary-content modal-trigger" title="Send Password"><i class="material-icons pink-text text-darken-4">sms</i></a> 
+						</div>
+					</li>
+	    	
+	    		{% endfor %}
+	    	
+	    	{% else %}
+				<li class="collection-item">	
+					No Account found
+				</li>
+			{% endif %}		
+		</ul>
+	</div>
+	</div>
+
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h5>Enter Password</h5>
+      <form action="{% url 'webaccountmanager:send_password' %}" method="POST">
+      	{% csrf_token %}
+      
+  		<input type="hidden" id="account_id" name="account_id">
+	  	<input type="password" id="password" name="password" placeholder="Enter Password">
+	  	<button type="submit" class="modal-close waves-effect waves-pink btn pink darken-4">
+	  		<i class="material-icons">send</i>
+	  		Send
+	  	</button>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
+
